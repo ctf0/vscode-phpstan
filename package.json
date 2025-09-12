@@ -1,0 +1,70 @@
+{
+    "activationEvents": [
+        "workspaceContains:phpstan.neon"
+    ],
+    "author": "ctf0",
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "category": "PHP Stan",
+                "command": "phpstan.analyze",
+                "title": "Analyze Project"
+            }
+        ],
+        "configuration": {
+            "properties": {
+                "phpstan.command": {
+                    "default": "./vendor/bin/phpstan analyse --memory-limit 2G --no-progress --no-interaction --error-format=json",
+                    "description": "phpstan command",
+                    "type": "string"
+                },
+                "phpstan.dockerVolumePath": {
+                    "default": "/var/www/html",
+                    "description": "if using docker, this should be the main container volume path (defaults to laravel/sail)",
+                    "type": "string"
+                },
+                "phpstan.phpCommand": {
+                    "default": "php",
+                    "description": "the php command path (any quotes needs to be escaped)",
+                    "type": "string"
+                },
+                "phpstan.watchGlob": {
+                    "default": "**/phpstan*.neon",
+                    "description": "file glob to watch to trigger re-analyze when changed",
+                    "type": "string"
+                }
+            },
+            "title": "Phpstan"
+        }
+    },
+    "dependencies": {
+        "execa": "^9.6.0"
+    },
+    "description": "phpstan vscode portal",
+    "devDependencies": {
+        "@types/node": "^24.3.1",
+        "@types/vscode": "^1.90.0",
+        "esbuild": "^0.25.9",
+        "typescript": "^5.9.2"
+    },
+    "displayName": "Phpstan (New)",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "icon": "icon.png",
+    "main": "./out/main",
+    "name": "vscode-phpstan-new",
+    "publisher": "ctf0",
+    "repository": "https://github.com/ctf0/vscode-phpstan",
+    "scripts": {
+        "esbuild": "npm run esbuild-base -- --sourcemap",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+        "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+        "vscode:prepublish": "npm run esbuild-base -- --pure:console.log --minify",
+        "watch": "npm run esbuild"
+    },
+    "version": "0.0.1"
+}
